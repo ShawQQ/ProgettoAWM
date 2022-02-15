@@ -1,0 +1,18 @@
+<ion-content>
+	<div class="module">
+		<div class="container">
+			<ion-title size="large" class="main-title">Pagina Login</ion-title>
+			<div class="form-wrapper">
+				<form class="login-form" [formGroup]="loginForm" (ngSubmit)="doLogin()">
+					<ion-item>
+						<ion-input formControlName="email" placeholder="Inserisci la tua email" type="email" required></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-input formControlName="password" placeholder="Inserisci la tua password" type="password" required></ion-input>
+					</ion-item>
+					<ion-button type="submit" class="submit" expand="full">Login</ion-button>
+				</form>
+			</div>
+		</div>
+	</div>
+</ion-content>

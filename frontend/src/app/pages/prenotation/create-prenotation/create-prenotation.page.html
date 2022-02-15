@@ -1,0 +1,35 @@
+<ion-content>
+	<div class="module">
+		<div class="container">
+			<ion-title size="large" class="main-title">Effettua una prenotazione</ion-title>
+			<form class="prenotation-form" [formGroup]="prenotationForm" (ngSubmit)="submitPrenotation()">
+				<ion-grid>
+					<ion-row>
+						<ion-col size="12">
+							<ion-item>
+								<ion-datetime formControlName="date" placeholder="Seleziona data"></ion-datetime>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12">
+							<ion-item>
+								<ion-select placeholder="Seleziona durata prenotazione" formControlName="duration">
+									<ion-select-option value="HALF_DAY">Mezza giornata</ion-select-option>
+									<ion-select-option value="FULL_DAY">Intera giornata</ion-select-option>
+								</ion-select>
+							</ion-item>
+						</ion-col>
+						<ion-col size="12" *ngIf="prenotationForm.controls.duration.value == 'HALF_DAY'">
+							<ion-item>
+								<ion-select placeholder="Seleziona tempo soggiorno" formControlName="time">
+									<ion-select-option value="MORNING">Mattina</ion-select-option>
+									<ion-select-option value="AFTERNOON">Pomeriggio</ion-select-option>
+								</ion-select>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+				<ion-button type="submit" class="submit" expand="full" [disabled]="prenotationForm.errors?.['isInvalid']">Effettua prenotazione</ion-button>
+			</form>
+		</div>
+	</div>
+</ion-content>

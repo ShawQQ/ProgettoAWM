@@ -1,0 +1,42 @@
+<ion-content>
+	<div class="module">
+		<div class="container">
+			<ion-title size="large" class="main-title">Pagina Registrazione</ion-title>
+			<ion-title size="small" class="form-error" *ngIf="registerForm.errors?.['passwordNotMatch']">Le password non corrispondono</ion-title>
+			<div class="form-wrapper">
+				<form class="register-form" [formGroup]="registerForm" (ngSubmit)="doRegister()">
+					<ion-grid>
+						<ion-row>
+							<ion-col size="12">
+								<ion-item>
+									<ion-input formControlName="email" placeholder="Inserisci la tua email" type="email" required email></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="12">
+								<ion-item>
+									<ion-input formControlName="password" placeholder="Inserisci la tua password" type="password" required></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="12">
+								<ion-item>
+									<ion-input formControlName="confirmPassword" placeholder="Conferma la password" type="password" required></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="6">
+								<ion-item>
+									<ion-input formControlName="name" placeholder="Inserisci il tuo nome" type="text"></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="6">
+								<ion-item>
+									<ion-input formControlName="surname" placeholder="Inserisci il tuo cognome" type="text"></ion-input>
+								</ion-item>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+					<ion-button type="submit" class="submit" expand="full" [disabled]="registerForm.errors?.['passwordNotMatch'] || registerForm.errors?.['requiredFieldNotCompiled']">Registrazione</ion-button>
+				</form>
+			</div>
+		</div>
+	</div>
+</ion-content>

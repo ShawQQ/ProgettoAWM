@@ -1,0 +1,40 @@
+<ion-content>
+	<div class="container">
+		<div class="module">
+			<ion-title size="large" class="main-title">Opzioni</ion-title>
+			<div class="option-wrapper">
+				<div class="login" *ngIf="!isUser">
+					<ion-button routerLink="/user/register" class="action">Registrazione</ion-button>
+					<ion-button routerLink="/user/login" class="action">Login</ion-button>
+				</div>
+				<div class="action" *ngIf="isUser">
+					<ion-button routerLink="/prenotation" *ngIf="isAdmin" class="action">Creazione evento</ion-button>
+					<ion-button routerLink="/prenotation" *ngIf="canPrenotate" class="action">Prenotazione</ion-button>
+					<ion-button routerLink="/" class="action" (click)="logout()">Logout</ion-button>
+				</div>
+			</div>
+		</div>
+		<div class="module" *ngIf="userPrenotation !== undefined && userPrenotation.length !== 0">
+			<ion-title size="large" class="main-title">Prenotazioni</ion-title>
+			<table>
+				<thead>
+					<tr>
+						<th>Stato</th>
+						<th>Durata</th>
+						<th>Tempo</th>
+						<th>Data</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let prenotation of userPrenotation">
+						<td>{{prenotation.status == 'REGISTERED' ? 'Registrata' : ''}}</td>
+						<td>{{prenotation.duration == 'HALF_DAY' ? 'Mezza giornata' : 'Intera giornata'}}</td>
+						<td>{{prenotation.time == 'MORNING' ? 'Mattina' : 'Pomeriggio'}}</td>
+						<td>{{prenotation.date}}</td>
+						<td><ion-button (click)="deletePrenotation(prenotation.id)">Elimina prenotazione</ion-button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</ion-content>
