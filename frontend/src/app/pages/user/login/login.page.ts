@@ -26,6 +26,7 @@ export class LoginPage implements OnInit {
 	}
 
 	doLogin(): void {
+		this.loginFormError = '';
 		let loginData: LoginDto = {
 			email: this.loginForm.controls.email.value,
 			password: this.loginForm.controls.password.value

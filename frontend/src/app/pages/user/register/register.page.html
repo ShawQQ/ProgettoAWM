@@ -3,6 +3,7 @@
 		<div class="container">
 			<ion-title size="large" class="main-title">Pagina Registrazione</ion-title>
 			<ion-title size="small" class="form-error" *ngIf="registerForm.errors?.['passwordNotMatch']">Le password non corrispondono</ion-title>
+			<ion-title size="small" class="form-error" *ngIf="registerFormError">Si è verificato un errore</ion-title>
 			<div class="form-wrapper">
 				<form class="register-form" [formGroup]="registerForm" (ngSubmit)="doRegister()">
 					<ion-grid>

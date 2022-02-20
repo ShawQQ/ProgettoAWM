@@ -1,6 +1,5 @@
 package it.unicam.cs.progetto.user;
 
-import it.unicam.cs.progetto.prenotation.dto.PrenotationDto;
 import it.unicam.cs.progetto.user.dto.*;
 import it.unicam.cs.progetto.user.exception.RegistrationDataNotValidException;
 import it.unicam.cs.progetto.user.exception.UserNotValidException;
@@ -17,8 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -36,6 +33,9 @@ public class UserService implements UserDetailsService {
 		}
 		if(!registrationData.getPassword().equals(registrationData.getConfirmPassword())){
 			throw new RegistrationDataNotValidException("Password non combaciano");
+		}
+		if(userAlreadyExist(registrationData.getEmail())){
+			throw new RegistrationDataNotValidException("Utente già esistente");
 		}
 
 		IPasswordEnconder<PasswordEncoder> passwordEncoder = new BasicPasswordEncoder();
@@ -57,6 +57,16 @@ public class UserService implements UserDetailsService {
 	private UserModel getUserByEmail(String email) throws UserNotValidException {
 		return userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotValidException("Non existent user with email " + email));
 	}
+
+	private boolean userAlreadyExist(String email){
+		try{
+			this.getUserByEmail(email);
+			return true;
+		} catch (UserNotValidException e) {
+			return false;
+		}
+	}
+
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

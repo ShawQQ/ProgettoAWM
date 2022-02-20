@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { catchError } from 'rxjs/operators';
 import { AuthToken, RegisterDto } from '../user';
 import { UserService } from '../user.service';
 
@@ -10,6 +11,7 @@ import { UserService } from '../user.service';
 })
 export class RegisterPage implements OnInit {
 	registerForm: FormGroup;
+	registerFormError: string;
 	passwordMatchValidator: ValidatorFn = (control: AbstractControl) : ValidationErrors => {
 		const password = control.get('password');
 		const confirmPassword = control.get('confirmPassword');
@@ -49,6 +51,7 @@ export class RegisterPage implements OnInit {
 	}
 
 	doRegister(): void{
+		this.registerFormError = '';
 		let registerData: RegisterDto = {
 			email: this.registerForm.controls.email.value,
 			password: this.registerForm.controls.password.value,
@@ -57,9 +60,14 @@ export class RegisterPage implements OnInit {
 			surname: this.registerForm.controls.surname.value
 		};
 		this.userService.register(registerData)
+			.pipe(
+				catchError(error => this.registerFormError = error)
+			)
 			.subscribe((data: AuthToken) => {
-				this.userService.saveAuthToken(data);
-				window.location.href = "/";
+				if(!this.registerFormError){
+					this.userService.saveAuthToken(data);
+					window.location.href = "/";
+				}
 			});
 	}
 }
