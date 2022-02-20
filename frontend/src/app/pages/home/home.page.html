@@ -1,6 +1,9 @@
 <ion-content>
 	<div class="container">
 		<div class="module">
+			<div class="user-info" *ngIf="isUser && !!currentUser">
+				<ion-text><h1>{{currentUser.name ? currentUser.name + " " + currentUser.surname : currentUser.email}}</h1></ion-text>
+			</div>
 			<ion-title size="large" class="main-title">Opzioni</ion-title>
 			<div class="option-wrapper">
 				<div class="login" *ngIf="!isUser">

@@ -2,15 +2,26 @@
 	<div class="module">
 		<div class="container">
 			<ion-title size="large" class="main-title">Pagina Login</ion-title>
+			<ion-title size="small" class="form-error" *ngIf="loginFormError">Si è verificato un errore</ion-title>
 			<div class="form-wrapper">
 				<form class="login-form" [formGroup]="loginForm" (ngSubmit)="doLogin()">
-					<ion-item>
-						<ion-input formControlName="email" placeholder="Inserisci la tua email" type="email" required></ion-input>
-					</ion-item>
-					<ion-item>
-						<ion-input formControlName="password" placeholder="Inserisci la tua password" type="password" required></ion-input>
-					</ion-item>
-					<ion-button type="submit" class="submit" expand="full">Login</ion-button>
+					<ion-grid>
+						<ion-row>
+							<ion-col size="12">
+								<ion-item>
+									<ion-input formControlName="email" placeholder="Inserisci la tua email" type="email" required></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="12">
+								<ion-item>
+									<ion-input formControlName="password" placeholder="Inserisci la tua password" type="password" required></ion-input>
+								</ion-item>
+							</ion-col>
+							<ion-col size="12">
+								<ion-button type="submit" class="submit" expand="full">Login</ion-button>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
 				</form>
 			</div>
 		</div>

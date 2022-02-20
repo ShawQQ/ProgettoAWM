@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { catchError } from 'rxjs/operators';
 import { AuthToken, LoginDto } from '../user';
 import { UserService } from '../user.service';
 
@@ -10,6 +11,7 @@ import { UserService } from '../user.service';
 })
 export class LoginPage implements OnInit {
 	loginForm: FormGroup;
+	loginFormError: string;
 
 	constructor(
 		private userService: UserService,
@@ -29,9 +31,14 @@ export class LoginPage implements OnInit {
 			password: this.loginForm.controls.password.value
 		}
 		this.userService.login(loginData)
+			.pipe(
+				catchError(err => this.loginFormError = err)
+			)
 			.subscribe((data: AuthToken) => {
-				this.userService.saveAuthToken(data);
-				location.href = "/";
-			});
+				if(!this.loginFormError){
+					this.userService.saveAuthToken(data);
+					location.href = "/";
+				}
+			})
 	}
 }

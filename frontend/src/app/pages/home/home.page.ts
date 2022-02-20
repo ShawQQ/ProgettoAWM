@@ -26,6 +26,7 @@ export class HomePage implements OnInit {
 			this.userService.getUserData({
 				jwt: authToken
 			}).subscribe((user: UserDto) => {
+				this.currentUser = user;
 				this.isAdmin = user.admin
 				this.userPrenotation = user.prenotations;
 			});
