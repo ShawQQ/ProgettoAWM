@@ -1,6 +1,5 @@
 package it.unicam.cs.progetto.user;
 
-import it.unicam.cs.progetto.event.EventModel;
 import it.unicam.cs.progetto.prenotation.PrenotationModel;
 import it.unicam.cs.progetto.prenotation.dto.PrenotationDto;
 
@@ -22,8 +21,6 @@ public class UserModel{
 	private boolean isAdmin;
 	@OneToMany
 	private Set<PrenotationModel> prenotation;
-	@ManyToMany
-	private Set<EventModel> events;
 
 	public UserModel(){}
 
@@ -36,9 +33,8 @@ public class UserModel{
 	 * @param isActive stato account utente
 	 * @param isAdmin account admin o no
 	 * @param prenotation prenotazioni utente
-	 * @param events eventi prenotati
 	 */
-	public UserModel(Long id, String name, String surname, String email, String password, boolean isActive, boolean isAdmin, Set<PrenotationModel> prenotation, Set<EventModel> events){
+	public UserModel(Long id, String name, String surname, String email, String password, boolean isActive, boolean isAdmin, Set<PrenotationModel> prenotation){
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -47,7 +43,6 @@ public class UserModel{
 		this.isActive = isActive;
 		this.isAdmin = isAdmin;
 		this.prenotation = prenotation;
-		this.events = events;
 	}
 
 	public Long getId(){
@@ -114,18 +109,9 @@ public class UserModel{
 		isAdmin = admin;
 	}
 
-	public Set<EventModel> getEvents() {
-		return events;
-	}
-
-	public void setEvents(Set<EventModel> events) {
-		this.events = events;
-	}
-
 	public Set<PrenotationDto> getPrenotationDto() {
 		Set<PrenotationDto> prenotations = new HashSet<>();
 		this.getPrenotation()
-				.stream()
 				.forEach(p -> prenotations.add(new PrenotationDto(p.getId(), p.getStatus(), p.getDuration(), p.getTime(), p.getDate())));
 		return prenotations;
 	}
